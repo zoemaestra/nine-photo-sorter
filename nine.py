@@ -78,14 +78,19 @@ def resizeImage(imageFileName):
 
 image_label = ttk.Label(win)
 if len(images) > 0:
-    imagefilename = ttk.Label(win,text=images[currentImage],font=("Arial", 20))
-    img2 = resizeImage(images[currentImage])
-    image_label.configure(image=img2)
-    image_label.image = img2
+    try:
+        imagefilename = ttk.Label(win,text=images[currentImage],font=("Arial", 20))
+        img2 = resizeImage(images[currentImage])
+        image_label.configure(image=img2)
+        image_label.image = img2
+    except:
+        imagefilename = ttk.Label(win,text=images[currentImage],font=("Arial", 20))
+        image_label.config(image='',text="Error displaying image",font=("Arial", 25))
+
 else:
     imagefilename = ttk.Label(win,text="No images!",font=("Arial", 20))
     image_label.config(image='',text="Place the .exe in photo folder!",font=("Arial", 25))
-    
+
 imagefilename.pack()
 image_label.pack()
 info = ttk.Label(win,text="""

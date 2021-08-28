@@ -48,11 +48,16 @@ def keydown(e):
             shutil.move(f".\{images[currentImage]}",f".\{allowedKeys[e.keysym]}\{images[currentImage]}")
             currentImage += 1
             if currentImage < len(images):
-                img2 = resizeImage(images[currentImage])
                 imagefilename.configure(text=images[currentImage])
                 imagefilename.text = images[currentImage]
-                image_label.configure(image=img2)
-                image_label.image = img2
+                try:
+                    img2 = resizeImage(images[currentImage])
+                    image_label.configure(image=img2)
+                    image_label.image = img2
+                except Exception as e:
+                    image_label.config(image='',text="Error displaying image",font=("Arial", 25))
+                    print(e)
+
 
 def resizeImage(imageFileName):
     basewidth = 500
@@ -78,14 +83,14 @@ def resizeImage(imageFileName):
 
 image_label = ttk.Label(win)
 if len(images) > 0:
+    imagefilename = ttk.Label(win,text=images[currentImage],font=("Arial", 20))
     try:
-        imagefilename = ttk.Label(win,text=images[currentImage],font=("Arial", 20))
         img2 = resizeImage(images[currentImage])
         image_label.configure(image=img2)
         image_label.image = img2
-    except:
-        imagefilename = ttk.Label(win,text=images[currentImage],font=("Arial", 20))
+    except Exception as e:
         image_label.config(image='',text="Error displaying image",font=("Arial", 25))
+        print(e)
 
 else:
     imagefilename = ttk.Label(win,text="No images!",font=("Arial", 20))
